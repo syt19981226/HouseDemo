@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sz.gl.pojo.House" >
+	
+	
+	<select id="findHouse" parameterType="java.util.Map" resultMap="houseinfo">
+		SELECT
+		houseid,pic_path,title,house_area,house_price,house_date,phone,summary,public_date,styleid,street 
+		FROM house 
+		<where>
+			<if test="kw!=null"> and title like '%${kw}%' </if>
+			<if test="loprice!=null"> and house_price &gt;= #{loprice} </if>
+			<if test="hiprice!=null"> and house_price&lt;=#{hiprice} </if>
+			<if test="code!=null"> and street=#{code} </if>
+			<if test="styleid!=null"> and styleid=#{styleid} </if>
+			<if test="loArea!=null"> and house_area&gt;=#{loArea} </if>
+			<if test="hiArea!=null"> and house_area&lt;=#{hiArea} </if>
+		</where>
+		 limit #{start},#{ps}
+	</select>
+	
+	<resultMap type="cn.sz.gl.pojo.House" id="houseinfo">
+		<id property="houseid" column="houseid" />
+		<result property="picpath" column="pic_path" />
+		<result property="title" column="title" />
+		<result property="houseArea" column="house_area" />
+		<result property="price" column="house_price" />
+		<result property="houseDate" column="house_date" />
+		<result property="phone" column="phone" />
+		<result property="summary" column="summary" />
+		<result property="publicDate" column="public_date" />
+		<association property="houseStyle" column="styleid" select="cn.sz.gl.pojo.HouseStyle.findStyleById" ></association>
+		<association property="region" column="street"  select="cn.sz.gl.pojo.Region.findRegionByStreet" ></association>
+	</resultMap>
+	
+	<select id="countHouse" parameterType="java.util.Map" resultType="java.lang.Integer" >
+		select count(houseid) from house 
+		<where>
+			<if test="kw!=null"> and title like '%${kw}%' </if>
+			<if test="loprice!=null"> and house_price &gt;= #{loprice} </if>
+			<if test="hiprice!=null"> and house_price&lt;=#{hiprice} </if>
+			<if test="code!=null"> and street=#{code} </if>
+			<if test="styleid!=null"> and styleid=#{styleid} </if>
+			<if test="loArea!=null"> and house_area&gt;=#{loArea} </if>
+			<if test="hiArea!=null"> and house_area&lt;=#{hiArea} </if>
+		</where>
+	</select>
+	
+</mapper>

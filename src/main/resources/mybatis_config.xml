@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 1.配置全局参数 -->
+	
+	<!-- 2.配置数据源 -->
+	<environments default="myconn">
+		<!-- 这里每一个environment代表一个数据源，可以有多个environment -->
+		<environment id="myconn">
+			<!--事务管理的方式:
+					JDBC : 表示由数据库连接自行管理事务的提交和回滚
+					MANAGE: 表示由容器来管理事务，比如tomcat
+			  -->
+			<transactionManager type="JDBC"></transactionManager>
+			<!-- 
+				数据库连接
+			 -->
+			
+			<dataSource type="UNPOOLED">
+				<property name="driver" value="org.gjt.mm.mysql.Driver"/>
+			<!-- 	<property name="url" value="jdbc:mysql://http://10.1.15.217:3306/user?useUnicode=true&amp;characterEncoding=UTF-8"/> -->
+				<!-- <property name="url" value="jdbc:mysql://localhost:3306/user?useUnicode=true&amp;characterEncoding=UTF-8"/> -->
+		         <property name="url" value="jdbc:mysql://10.1.15.46:3306/firstdb?useUnicode=true&amp;characterEncoding=UTF-8"/> 
+				<property name="username" value="root"/>
+				<property name="password" value="root"/>
+			</dataSource>
+		
+			
+			
+		</environment>
+	</environments>
+	
+	<!-- 3.引入实体映射文件 
+			实体映射文件：存放sql;完成数据库表与实体类之间的映射关系
+	-->
+	<mappers>
+		<mapper resource="cn/sz/gl/pojo/House.xml" />
+		<mapper resource="cn/sz/gl/pojo/HouseStyle.xml" />
+		<mapper resource="cn/sz/gl/pojo/Region.xml" />
+		<mapper resource="cn/sz/gl/pojo/Users.xml" />
+	</mappers>
+	
+	
+	
+	
+	
+	
+</configuration>

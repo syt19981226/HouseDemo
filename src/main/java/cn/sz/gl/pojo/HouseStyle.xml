@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sz.gl.pojo.HouseStyle" >
+	
+	
+	<select id="findallstyle" resultType="cn.sz.gl.pojo.HouseStyle">
+		select styleid,style_name as styleName from house_style
+	</select>
+	
+	<select id="findStyleById" parameterType="java.lang.Integer" resultType="cn.sz.gl.pojo.HouseStyle">
+		select styleid,style_name as styleName from house_style where styleid=#{styleid}
+	</select>
+	
+	
+	
+</mapper>

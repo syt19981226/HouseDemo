@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sz.gl.pojo.Region" >
+	
+	<select id="findRegion" resultType="cn.sz.gl.pojo.Region">
+		select DISTINCT h.street as code,r.region_name_c as regionNameCn
+		from house h,t_region r
+		where h.street=r.CODE
+	</select>
+	
+	
+	<select id="findRegionByStreet" parameterType="java.lang.String" resultMap="regioninfo" >
+		select code,region_name_c,upper_region from t_region where code=#{street}
+	</select>
+	
+	<resultMap type="cn.sz.gl.pojo.Region" id="regioninfo">
+		<id property="code" column="code" />
+		<result property="regionNameCn" column="region_name_c" />
+		<association property="region"  column="upper_region" select="cn.sz.gl.pojo.Region.findAreaByUpperGegion" ></association>
+	</resultMap>
+	
+	<select id="findAreaByUpperGegion" parameterType="java.lang.String" resultType="cn.sz.gl.pojo.Region" >
+		select code,region_name_c,upper_region from t_region where code=#{upper_region}
+	</select>
+	
+	
+</mapper>
